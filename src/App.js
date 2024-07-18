@@ -1,31 +1,23 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "./assets/Header.png";
-import border from "./assets/border.png";
 import MainTabButtons from "./components/MainTabButtons";
 import Footer from "./components/common/Footer";
 import PopupComponent from "./components/common/PopupComponent";
-import { claimFreeGiftApi, overFlowAuto, overFlowHidden } from "./js/helpers";
+import { overFlowAuto, overFlowHidden } from "./js/helpers";
 import LanguageBar from "./components/common/LanguageBar";
 import { ApiContext } from "./services/Api";
 import { baserUrl } from "./js/baserUrl";
 import axios from "axios";
-import DailyFreeGift from "./components/DailyFreeGift";
 import Marque from "./components/Marquee";
 import upBtn from "./assets/up-btn.png";
-import Svga from "./components/Svga";
 import "./App.scss";
 
 function App() {
-  const headerRef = useRef(0);
-
   let [language, setLanguage] = useState("English");
   const [gameRecords, setgameRecords] = useState([]);
   const [loadMore, setLoadMore] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  // const [dailyFreeGift, setdailyFreeGift] = useState(false);
-  // const [dailyGift, setDailyGift] = useState(false);
-  const { userId, userInfo, isFlag, refreshApi, userToken } = useContext(ApiContext);
-  const haveReceiveFreeGift = userInfo?.haveReceiveFreeGift;
+  const { userId } = useContext(ApiContext);
   const [showBtnUp, setShowBtnUp] = useState(false);
 
   const [mainTabs, setMainTabs] = useState({

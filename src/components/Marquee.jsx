@@ -2,15 +2,15 @@ import React, { useContext } from "react";
 import unknown from "../assets/unknown.png";
 import FastMarquee from "react-fast-marquee";
 import { ApiContext } from "../services/Api";
-import { slicePlease } from "../js/helpers";
+import { goTo, slicePlease } from "../js/helpers";
 import borderImg from "../assets/Tickertape-Frame.png";
 function Marque() {
-  const { eidiToday } = useContext(ApiContext);
+  const { eidiToday, isLive } = useContext(ApiContext);
   const eidTossWinner = slicePlease(eidiToday?.list, 0, 3);
 
   return (
     <>
-      {eidTossWinner?.length == 0 ? null : (
+      {eidTossWinner?.length === 0 ? null : (
         <div className="marque-container f-tangoItalic">
           <FastMarquee direction="left" gradient={false} gradientColor={[0, 0, 0]} speed={70}>
             {eidTossWinner?.map((item, index) => {
@@ -20,9 +20,14 @@ function Marque() {
               return (
                 <div className="marquee-alternative" key={index}>
                   <div className="taxts d-flex al-center p-rel">
-                    <a className="d-flex jc-center al-center" href={`http://www.kktv1.com/m/?roomid=${userId}`}>
+                    <div
+                      className="d-flex jc-center al-center"
+                      onClick={() => {
+                        goTo(isLive, userId, userId);
+                      }}
+                    >
                       <img className="border-img p-abs" src={borderImg} alt="" />
-                    </a>
+                    </div>
                     <img className="user-img p-abs" src={item.portrait ? item.portrait : unknown} alt="" />
                     <div className="text">
                       <div className="content d-flex al-center fd-row">

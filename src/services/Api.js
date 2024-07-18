@@ -23,6 +23,7 @@ function EventProvider({ children }) {
     uid: 0,
     token: undefined,
   });
+  const isLive = false;
 
   const dancePartyRound = userInfo && userInfo?.data?.dancePartyRound;
   const refreshApi = () => {
@@ -31,16 +32,16 @@ function EventProvider({ children }) {
 
   useEffect(() => {
     try {
-      // window.phone.getUserInfo(function (userInfo) {
-      //   setUser({
-      //     uid: userInfo.userId > 0 ? userInfo.userId : 0,
-      //     token: userInfo.token !== "" ? userInfo.token : null,
-      //   });
-      // });
-      setUser({
-        uid: 596492376,
-        token: "A1B897DDD6E3E34E8CB022B730CAD9CFA5",
+      window.phone.getUserInfo(function (userInfo) {
+        setUser({
+          uid: userInfo.userId > 0 ? userInfo.userId : 0,
+          token: userInfo.token !== "" ? userInfo.token : null,
+        });
       });
+      // setUser({
+      //   uid: 596492376,
+      //   token: "A1B897DDD6E3E34E8CB022B730CAD9CFA5",
+      // });
     } catch (_error) {
       setUser({
         uid: 0,
@@ -155,6 +156,7 @@ function EventProvider({ children }) {
       })
       .catch((err) => console.log(err));
   }, [refresh]);
+
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -169,13 +171,14 @@ function EventProvider({ children }) {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`https://api-gateway-dev-sk.mikktv.xyz/api/activity/topRank/getTopRankByRegion?pageCount=10&pageIndex=0&rankType=0&userType=2&cityId=0`)
+      .get(`${kktvrUrl}api/activity/topRank/getTopRankByRegion?pageCount=10&pageIndex=0&rankType=0&userType=2&cityId=0`)
       .then((response) => {
         setRandomUser(response.data);
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
   }, [refresh]);
+
   return (
     <div>
       <ApiContext.Provider
@@ -197,6 +200,7 @@ function EventProvider({ children }) {
           stream: stream?.roomList,
           randomUser: randomUser?.data,
           isFlag,
+          isLive,
           setisFlag,
         }}
       >

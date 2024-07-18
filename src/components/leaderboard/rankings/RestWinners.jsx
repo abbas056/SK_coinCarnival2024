@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import unknown from "../../../assets/unknown.png";
-import { captureImageError, formatData } from "../../../js/helpers";
+import { captureImageError, formatData, goTo } from "../../../js/helpers";
 import { baserUrl } from "../../../js/baserUrl";
 import coinIcon from "../../../assets/Coin.png";
 import beanIcon from "../../../assets/bean.png";
-import gemIcon from "../../../assets/gems.png";
 import LeaderBoardSlider from "./../../leaderboard-slider/LeaderBoardSlider";
+import { ApiContext } from "../../../services/Api";
 
 function RestWinners({
   userName,
@@ -25,6 +25,8 @@ function RestWinners({
   talent,
   gifter,
 }) {
+  const { isLive } = useContext(ApiContext);
+
   let levelUrl;
   let level;
   let icon;
@@ -62,9 +64,14 @@ function RestWinners({
             <div className="rank-id d-flex al-center jc-center">{listNumber}.</div>
             <div className="d-flex al-center gap-2">
               <div className={"frame d-flex al-center jc-center"}>
-                <a className="d-flex jc-center al-center" href={`http://www.kktv1.com/m/?roomid=${userId}`}>
+                <div
+                  className="d-flex jc-center al-center"
+                  onClick={() => {
+                    goTo(isLive, userId, userId);
+                  }}
+                >
                   <img onError={captureImageError} className="user-image" src={userAvatar ? userAvatar : unknown} alt="" />
-                </a>
+                </div>
               </div>
               <div className="user-info d-flex fd-column gap-1">
                 <span className="username">{userName && userName.slice(0, 8)}</span>

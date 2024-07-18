@@ -4,7 +4,6 @@ import RestWinners from "./rankings/RestWinners";
 import Loader from "./../common/Loader";
 import SeeButton from "./../common/SeeButton";
 import { ApiContext } from "../../services/Api";
-import { slicePlease } from "../../js/helpers";
 import SubButtons from "../sub-tabs/SubButtons";
 import mascot2 from "../../assets/Mascot-2.png";
 import mascot from "../../assets/Mascot.png";
@@ -39,27 +38,28 @@ function LeaderBoard({ tab1, tab2, tab3, tab4, subTabs, setSubTabs, subBtn1name,
               ) : (
                 <div className="rank-section-inner">
                   <div className="top-position-holders d-flex jc-center al-center m-auto">
-                    {topWinners?.map(({ nickname, userScore, userLevel, actorLevel, portrait, userId, expectBeans }, index) => {
-                      return (
-                        <div className="user-container p-rel" key={index}>
-                          <TopWinners
-                            userName={nickname}
-                            userScore={userScore}
-                            userAvatar={portrait}
-                            userId={userId}
-                            index={index}
-                            userLevel={userLevel}
-                            actorLevel={actorLevel}
-                            expectBeans={expectBeans}
-                            tab1={tab1}
-                            tab2={tab2}
-                            tab3={tab3}
-                            potValue={potValue}
-                            subTabs={subTabs}
-                          />
-                        </div>
-                      );
-                    })}
+                    {topWinners &&
+                      topWinners?.map(({ nickname, userScore, userLevel, actorLevel, portrait, userId, expectBeans }, index) => {
+                        return (
+                          <div className="user-container p-rel" key={index}>
+                            <TopWinners
+                              userName={nickname}
+                              userScore={userScore}
+                              userAvatar={portrait}
+                              userId={userId}
+                              index={index}
+                              userLevel={userLevel}
+                              actorLevel={actorLevel}
+                              expectBeans={expectBeans}
+                              tab1={tab1}
+                              tab2={tab2}
+                              tab3={tab3}
+                              potValue={potValue}
+                              subTabs={subTabs}
+                            />
+                          </div>
+                        );
+                      })}
                   </div>
                   <div
                     ref={restBoard}

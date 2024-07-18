@@ -26,7 +26,6 @@ function Tab2DailyTasks({ setMainTabs, tab2 }) {
   const [param, setParam] = useState();
   const [popup, setPopup] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
-  console.log(selectedUserId);
   const isLive = false;
   useEffect(() => {
     if (randomUser) {

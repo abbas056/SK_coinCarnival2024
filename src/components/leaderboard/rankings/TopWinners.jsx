@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import unknown from "../../../assets/unknown.png";
 import frame1 from "../../../assets/1st-User-Frame.png";
 import frame2 from "../../../assets/2nd-user-Frame.png";
 import frame3 from "../../../assets/3rd-User-Frame.png";
-import { captureImageError, currencySlang, estBeans } from "../../../js/helpers";
+import { captureImageError, estBeans, goTo } from "../../../js/helpers";
 import { baserUrl } from "../../../js/baserUrl";
 import beanIcon from "../../../assets/bean.png";
 import coinIcon from "../../../assets/Coin.png";
-import gemIcon from "../../../assets/gems.png";
+import { ApiContext } from "../../../services/Api";
 
 function TopWinners({ userName, userScore, userAvatar, userId, index, userLevel, actorLevel, tab1, potValue, gifting, talent, gifter, subTabs }) {
+  const { isLive } = useContext(ApiContext);
+
   let levelUrl;
   let level;
   let icon;
@@ -36,11 +38,15 @@ function TopWinners({ userName, userScore, userAvatar, userId, index, userLevel,
 
   return (
     <div className="innerData p-rel f-tangoItalic">
-      <div className={rank == 1 ? "first-user" : "runner-user"}>
-        <img onError={captureImageError} className="rank-user-image" src={userAvatar ? userAvatar : unknown} alt="" />
-        <a href={`http://www.kktv1.com/m/?roomid=${userId}`}>
+      <div className={rank === 1 ? "first-user" : "runner-user"}>
+        <div
+          onClick={() => {
+            goTo(isLive, userId, userId);
+          }}
+        >
+          <img onError={captureImageError} className="rank-user-image" src={userAvatar ? userAvatar : unknown} alt="" />
           <img className="rank-border-image p-rel" src={rank === 1 ? frame1 : rank === 2 ? frame2 : frame3} alt="" />
-        </a>
+        </div>
       </div>
       <div className={rank === 1 ? "bottom-data-1" : rank === 2 ? "bottom-data-2" : "bottom-data-3"}>
         <div className="bottom-info">
